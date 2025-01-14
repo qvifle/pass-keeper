@@ -18,9 +18,9 @@ const Toggler: React.FC<TogglerProps> = ({ password }) => {
       </button>
       <span
         onClick={() => copyToClipboard(password)}
-        className="text-zinc-400 select-none cursor-pointer relative w-full h-6">
+        className="text-zinc-400 select-none cursor-pointer relative w-full min-h-6">
         {isVisible ? (
-          password
+          <span>{password}</span>
         ) : (
           <span className="absolute top-[2px] left-0 h-4">{securedValue}</span>
         )}

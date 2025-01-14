@@ -1,11 +1,13 @@
 import cn from "@/utils/cn";
 import { cva, VariantProps } from "class-variance-authority";
-import React, { HTMLAttributes, ReactNode } from "react";
+import { Loader } from "lucide-react";
+import React, { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 
 interface ButtonProps
-  extends HTMLAttributes<HTMLButtonElement>,
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   icon?: ReactNode;
+  loading?: boolean;
 }
 
 const buttonVariants = cva(" duration-200", {
@@ -15,7 +17,7 @@ const buttonVariants = cva(" duration-200", {
         "bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 active:bg-zinc-600",
       secondary:
         "bg-zinc-950 border border-zinc-800 hover:bg-zinc-900 active:bg-zinc-800",
-      outline: "bg-zinc-950  hover:bg-zinc-900 active:bg-zinc-800",
+      outline: "bg-zinc-900  hover:bg-zinc-800 active:bg-zinc-700",
     },
     size: {
       icon: "rounded-md w-7 h-7 flex items-center justify-center",
@@ -29,17 +31,20 @@ const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   size = "medium",
   icon,
+  className,
+  loading = false,
   ...rest
 }) => {
   return (
     <button
       className={cn(
         buttonVariants({ size, variant }),
-        rest.className,
-        icon && "flex items-center gap-1"
+        (icon || loading) && "flex items-center gap-1",
+        className
       )}
+      type="button"
       {...rest}>
-      {icon}
+      {loading ? <Loader size={16} className="animate-spin" /> : icon}
       {children}
     </button>
   );

@@ -1,8 +1,14 @@
 "use client";
+import usePasswordsStore from "@/store/PasswordsStore";
 import Dropdown, { DropdownMenuItem } from "@/ui/Dropdown";
 import React from "react";
 
-const ServicePasswordOptionsDropdown = () => {
+const ServicePasswordOptionsDropdown = ({
+  password,
+}: {
+  password: Password;
+}) => {
+  const { deletePasswordById } = usePasswordsStore();
   return (
     <Dropdown
       items={
@@ -10,7 +16,11 @@ const ServicePasswordOptionsDropdown = () => {
           <DropdownMenuItem onClick={() => console.log("hello")}>
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem danger>Delete</DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => deletePasswordById(password.id)}
+            danger>
+            Delete
+          </DropdownMenuItem>
         </>
       }>
       <span className="mb-2">...</span>
