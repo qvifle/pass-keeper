@@ -27,7 +27,10 @@ interface GeneratePasswordFormFields {
   customSymbols: string;
 }
 
-const CreatePasswordDialog: React.FC<DialogProps> = ({ isOpen, setOpen }) => {
+const CreatePasswordDialog: React.FC<Omit<DialogProps, "title">> = ({
+  isOpen,
+  setOpen,
+}) => {
   const [activeTab, setActiveTab] = useState("Create");
   const tabs: Tab[] = [
     { label: "Create", content: <div>Create</div> },
@@ -35,7 +38,11 @@ const CreatePasswordDialog: React.FC<DialogProps> = ({ isOpen, setOpen }) => {
   ];
 
   return (
-    <Dialog title="Add password" className="min-w-[600px]" isOpen={isOpen} setOpen={setOpen}>
+    <Dialog
+      title="Add password"
+      className="min-w-[600px]"
+      isOpen={isOpen}
+      setOpen={setOpen}>
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
     </Dialog>
   );

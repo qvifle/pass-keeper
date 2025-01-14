@@ -6,16 +6,7 @@ import Button from "@/ui/Button";
 import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
-// interface KeyValue {
-//   name: string;
-//   password: string;
-// }
 
-// const passwords: KeyValue[] = [
-//   { name: "GitHub", password: "HelloWorld123" },
-//   { name: "LinkedIn", password: "myPass337" },
-//   { name: "HeadHunter", password: "shar1kWho854" },
-// ];
 
 const UserPasswordsPage = () => {
   const [isModalOpen, setModalOpen] = useState(true);
