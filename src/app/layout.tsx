@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Providers from "../context/Providers";
+import { DialogContextProvider } from "@/context/DialogContext";
+import DialogsContainer from "@/components/dialogs/DialogsContainer";
+import Button from "@/ui/Button";
+import { Github } from "lucide-react";
+import Link from "next/link";
+import Sidebar from "@/components/layout/Sidebar";
+import Header from "@/components/layout/Header";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,19 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className}  min-h-screen h-full w-full grid grid-cols-[300px,1fr] grid-rows-[64px,1fr]`}>
-        <Providers>
-          <header className="bg-zinc-950 border-b border-zinc-800 col-span-2 flex items-center p-2">
-            <span className="text-2xl font-semibold">Password Keeper</span>
-          </header>
-          <aside className="bg-zinc-950 border-r border-zinc-800 p-2">
-            <div className="flex flex-col gap-1 ">
-              <span>Add Password</span>
-              <span>My Passwords</span>
-            </div>
-          </aside>
-          <main className="bg-zinc-950 p-2"> {children}</main>
-        </Providers>
+        className={`${inter.className}  h-screen w-full grid grid-cols-[300px,1fr] grid-rows-[64px,1fr]`}>
+        <DialogContextProvider>
+          <Header />
+          <Sidebar />
+          <main className="bg-zinc-950 p-2 overflow-y-auto"> {children}</main>
+          <DialogsContainer />
+        </DialogContextProvider>
       </body>
     </html>
   );

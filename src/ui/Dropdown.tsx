@@ -36,9 +36,9 @@ const Dropdown: React.FC<DropdownProps> = ({ children, items }) => {
       {isOpen && (
         <div
           onClick={() => setOpen(false)}
-          className=" fixed top-0 left-0 w-full h-full "></div>
+          className="fixed top-0 left-0 w-full h-full "></div>
       )}
-      <Button size="icon" onClick={() => setOpen((s) => !s)}>
+      <Button size="icon" onClick={(e) => setOpen(true)}>
         {children}
       </Button>
       <div
@@ -47,7 +47,7 @@ const Dropdown: React.FC<DropdownProps> = ({ children, items }) => {
         }}
         className={cn(
           isOpen ? "visible opacity-100" : "invisible opacity-0",
-          "absolute z-20 min-w-[120px] top-[calc(100%+5px)] left-0 bg-zinc-800 p-2 border border-zinc-700 rounded-md duration-100"
+          "absolute z-20  min-w-[120px] top-[calc(100%+5px)] left-0 bg-zinc-800 p-2 border border-zinc-700 rounded-md duration-100"
         )}>
         {items}
       </div>

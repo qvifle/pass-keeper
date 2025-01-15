@@ -1,4 +1,3 @@
-"use client";
 import Button from "@/ui/Button";
 import PostClickTooltip from "@/ui/PostClickTooltip";
 import copyToClipboard from "@/utils/copyToClipboard";

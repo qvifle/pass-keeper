@@ -1,9 +1,12 @@
-import useLocalStorage from "@/hooks/useLocalStorage";
+"use client";
+
+import { useLocalStorage } from "usehooks-ts";
 
 const usePasswordsStore = () => {
   const [passwords, setPasswords] = useLocalStorage<Password[]>(
     "passwords",
-    []
+    [],
+    { initializeWithValue: false }
   );
 
   const addPassword = (password: PasswordValue) => {

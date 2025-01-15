@@ -1,17 +1,16 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import Dialog, { DialogProps } from "./Dialog";
 import Input from "@/ui/Input";
 import Checkbox from "@/ui/Checkbox";
 import Button from "@/ui/Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import generatePassword from "@/utils/generatePassword";
-import { Dices, X } from "lucide-react";
-import CopyButton from "../buttons/CopyButton";
+import { Dices } from "lucide-react";
+import CopyButton from "../../buttons/CopyButton";
 import usePasswordsStore from "@/store/PasswordsStore";
 import getRandomNumber from "@/utils/getRandomNumber";
 import preventLimitValue from "@/utils/preventLimitValue";
-import Tabs, { Tab } from "@/ui/Tabs";
+import emulateLoading from "@/utils/emulateLoading";
 
 interface GeneratePasswordFormFields {
   serviceName: string;
@@ -27,39 +26,24 @@ interface GeneratePasswordFormFields {
   customSymbols: string;
 }
 
-const CreatePasswordDialog: React.FC<Omit<DialogProps, "title">> = ({
-  isOpen,
-  setOpen,
-}) => {
-  const [activeTab, setActiveTab] = useState("Create");
-  const tabs: Tab[] = [
-    { label: "Create", content: <div>Create</div> },
-    { label: "Generate", content: <GenerateTab setOpen={setOpen} /> },
-  ];
-
-  return (
-    <Dialog
-      title="Add password"
-      className="min-w-[600px]"
-      isOpen={isOpen}
-      setOpen={setOpen}>
-      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
-    </Dialog>
-  );
-};
-
 const GenerateTab = ({
   setOpen,
+  password,
 }: {
+  password: Password | null;
+
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { addPassword } = usePasswordsStore();
+  const { updatePassword } = usePasswordsStore();
   const [generatedPassword, setGeneratedPassword] = useState("");
   const [isLoading, setLoading] = useState(false);
   const { register, handleSubmit, watch, getValues, reset } =
     useForm<GeneratePasswordFormFields>();
 
-  const onSubmit: SubmitHandler<GeneratePasswordFormFields> = (data) => {
+  const onSubmit: SubmitHandler<GeneratePasswordFormFields> = () => {
+    if (!generatedPassword) {
+      return;
+    }
     setLoading(true);
   };
 
@@ -69,7 +53,7 @@ const GenerateTab = ({
   };
 
   const closeDialog = () => {
-    // setOpen(false);
+    setOpen(false);
     dialogReset();
   };
 
@@ -112,10 +96,6 @@ const GenerateTab = ({
 
   useEffect(() => {
     setGeneratedPassword(generated);
-
-    return () => {
-      console.log("unmount");
-    };
   }, [generated]);
 
   useEffect(() => {
@@ -123,23 +103,27 @@ const GenerateTab = ({
       return;
     }
 
-    const delay = getRandomNumber(500, 1500);
-    const isSucces = !!getRandomNumber(0, 1);
-
-    const timer = setTimeout(() => {
-      if (isSucces) {
-        addPassword({
+    const timer = emulateLoading({
+      delayAverage: { from: 500, to: 1500 },
+      onSucces: () => {
+        if (!password) {
+          throw new Error("PasswordId is undefined");
+        }
+        updatePassword(password.id, {
           service: getValues().serviceName,
           password: generatedPassword,
         });
 
         alert("Password succesfully saved!");
         closeDialog();
-      } else {
+      },
+      onError: () => {
         alert("Something went wrong");
-      }
-      setLoading(false);
-    }, delay);
+      },
+      onEnd: () => {
+        setLoading(false);
+      },
+    });
 
     return () => {
       clearTimeout(timer);
@@ -157,6 +141,7 @@ const GenerateTab = ({
             min="1"
             className="mb-1"
             {...register("length", {
+              required: true,
               valueAsNumber: true,
               onChange: (e) => preventLimitValue(100, e),
             })}
@@ -192,7 +177,8 @@ const GenerateTab = ({
             placeholder="Service name"
             className="mb-1"
             label="Service"
-            {...register("serviceName")}
+            defaultValue={password?.service}
+            {...register("serviceName", { required: true })}
           />
 
           <div className="flex gap-1 items-end ">
@@ -223,4 +209,4 @@ const GenerateTab = ({
   );
 };
 
-export default CreatePasswordDialog;
+export default GenerateTab;

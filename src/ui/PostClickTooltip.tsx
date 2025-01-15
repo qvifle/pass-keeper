@@ -1,3 +1,4 @@
+"use client";
 import React, { HTMLAttributes, ReactNode, useState } from "react";
 
 interface PostClickTooltipProps extends HTMLAttributes<HTMLDivElement> {

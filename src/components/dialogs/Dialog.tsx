@@ -4,14 +4,17 @@ import cn from "@/utils/cn";
 import { X } from "lucide-react";
 import React, { HTMLAttributes, useEffect, useRef } from "react";
 
-export interface DialogProps extends HTMLAttributes<HTMLDialogElement> {
+export interface DialogComponentProps
+  extends HTMLAttributes<HTMLDialogElement> {
   isOpen: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   closeButton?: boolean;
   title: string;
 }
 
-const Dialog: React.FC<DialogProps> = ({
+export interface DialogProps extends Omit<DialogComponentProps, "title"> {}
+
+const Dialog: React.FC<DialogComponentProps> = ({
   isOpen,
   setOpen,
   children,

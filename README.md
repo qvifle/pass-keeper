@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Менеджер паролей
 
-## Getting Started
+## Описание проекта
+Веб-приложение для хранения и генерации паролей для различных сервисов.
+Реализует следующие возможности:
 
-First, run the development server:
+- Хранение пар «Сервис - Пароль».
+- Добавление паролей с симуляцией отправки данных на сервер.
+- Просмотр и поиск по списку паролей.
+- Копирование и удаление паролей.
+- Генерация случайных паролей с заданными настройками.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Как запустить проект
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Node.js версии 21.4.0
+2. Клонируйте репозиторий с проектом:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   git clone https://github.com/qvifle/pass-keeper.git
+   cd pass-keeper
+   ```
 
-## Learn More
+3. Установите зависимости:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Запустите локальный сервер разработки:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+5. Откройте [http://localhost:3000](http://localhost:3000) в браузере.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Технологический стек
+
+- **Next.js 14.2.23** — Фреймворк для создания React-приложений с серверным рендерингом.
+- **TypeScript** — Строгая типизация для JavaScript.
+- **Tailwind CSS** — Утилитарный CSS-фреймворк для быстрой стилизации.
+- **react-hook-form** — Управление состоянием формы и валидацией.
+
+---
+
+## Функционал приложения
+
+1. **Добавление паролей**:
+   - Пользователь вводит название сервиса и пароль в модальном окне.
+   - Данные сохраняются в localStorage с симуляцией отправки на сервер (50% вероятность успешного ответа).
+   - При успешном ответе данные сохраняются и отображаются в списке. При ошибке — отображается сообщение об ошибке.
+
+2. **Просмотр и поиск**:
+   - Список сохранённых пар «Сервис - Пароль» доступен для просмотра.
+   - Реализован поиск по названию сервиса.
+
+3. **Копирование паролей**:
+   - Возможность скопировать пароль в буфер обмена.
+
+4. **Удаление паролей**:
+   - Реализовано через подтверждение и симуляцию запроса на сервер.
+
+5. **Генерация паролей**:
+   - Поддержка пользовательских настроек: длина пароля, использование букв, цифр, спецсимволов и регистра.
+   - Возможность задать набор символов для генерации пароля.
+
+---
+
+## Дополнительно
+
+- Использование Tailwind CSS для быстрой стилизации интерфейса.
+- Типизация всех компонентов с помощью TypeScript.

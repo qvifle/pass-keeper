@@ -9,27 +9,34 @@ import {
 } from "react";
 
 interface DialogContextProps {
-  isOpen: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-  modalContent: ReactNode;
-  setModalContent: Dispatch<SetStateAction<ReactNode>>;
+  isCreatePasswordOpen: boolean;
+  setCreatePasswordOpen: Dispatch<SetStateAction<boolean>>;
+
+  isEditPasswordOpen: boolean;
+  setEditPasswordOpen: Dispatch<SetStateAction<boolean>>;
+  editPassword: Password | null;
+  setEditPassword: Dispatch<SetStateAction<Password | null>>;
 }
 
-const DialogContext = createContext<null | DialogContextProps>(null);
+const DialogContext = createContext<DialogContextProps | null>(null);
 
 export const DialogContextProvider = ({
   children,
 }: {
   children: ReactNode;
 }) => {
-  const [isOpen, setOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<ReactNode>(null);
+  const [isCreatePasswordOpen, setCreatePasswordOpen] = useState(false);
+
+  const [isEditPasswordOpen, setEditPasswordOpen] = useState(false);
+  const [editPassword, setEditPassword] = useState<Password | null>(null);
 
   const value: DialogContextProps = {
-    isOpen,
-    setOpen,
-    modalContent,
-    setModalContent,
+    isCreatePasswordOpen,
+    setCreatePasswordOpen,
+    isEditPasswordOpen,
+    setEditPasswordOpen,
+    editPassword,
+    setEditPassword,
   };
 
   return (

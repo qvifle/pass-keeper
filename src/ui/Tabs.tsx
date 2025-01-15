@@ -17,9 +17,10 @@ const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, setActiveTab }) => {
 
   return (
     <div className="w-full h-full ">
-      <div className="flex items-center mx-auto w-fit">
-        {tabs.map(({ label }) => (
+      <div className="flex items-center mx-auto mb-2 w-fit">
+        {tabs.map(({ label }, key) => (
           <button
+            key={key}
             onClick={() => setActiveTab(label)}
             className={cn(
               "outline-none px-2 py-1 border-y first:border-l first:rounded-l-md last:border-r last:rounded-r -md border-zinc-800  duration-150",
